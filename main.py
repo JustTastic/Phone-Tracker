@@ -1,12 +1,13 @@
+from distutils.errors import LibError
 import phonenumbers
 from phones import mynumber
 from opencage.geocoder import OpenCageGeocode 
 from phonenumbers import geocoder
 import folium
+import subprocess
 
 def main():
-    afterHyphenNumber = mynumber.strip("-")
-    pepnumber = phonenumbers.parse(afterHyphenNumber.strip(" "))
+    pepnumber = phonenumbers.parse(mynumber)
     location = geocoder.description_for_number(pepnumber, 'en')
 
     print(location)
@@ -34,6 +35,15 @@ def main():
 
 
 if __name__ == '__main__':
-    main()    
-
-
+    try: 
+        cmd = "pip install phonenumber folium opencage"
+        process = subprocess.Popen(cmd, shell=True, stdout= subprocess.DEVNULL, stderr=subprocess.PIPE)
+        out, err = process.communicate()
+        if process.returncode == 0:
+            process.wait()
+            print("Necessary libraries has been install!!")
+            main()
+        else:
+            print("Library Not Found Or Not Written Correctly : {0}".format(err))
+    except LibError:
+        print("Nessesory libraries FAILED TO INSTALL!!")
