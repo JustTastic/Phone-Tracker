@@ -1,10 +1,12 @@
 from distutils.errors import LibError
+import os
 import phonenumbers
 from phones import mynumber
 from opencage.geocoder import OpenCageGeocode 
 from phonenumbers import geocoder
 import folium
 import subprocess
+import webbrowser
 
 def main():
     pepnumber = phonenumbers.parse(mynumber)
@@ -36,13 +38,17 @@ def main():
 
 if __name__ == '__main__':
     try: 
-        cmd = "pip install phonenumber folium opencage"
+        cmd = "pip install phonenumbers folium opencage"
         process = subprocess.Popen(cmd, shell=True, stdout= subprocess.DEVNULL, stderr=subprocess.PIPE)
         out, err = process.communicate()
         if process.returncode == 0:
             process.wait()
             print("Necessary libraries has been install!!")
             main()
+            chrome_path = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
+            webbrowser.register('chrome', None, webbrowser.BackgroundBrowser(chrome_path))
+            locationHTML = "./location.html" 
+            webbrowser.get('chrome').open_new_tab(locationHTML)
         else:
             print("Library Not Found Or Not Written Correctly : {0}".format(err))
     except LibError:
