@@ -47,8 +47,9 @@ if __name__ == '__main__':
             main()
             chrome_path = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
             webbrowser.register('chrome', None, webbrowser.BackgroundBrowser(chrome_path))
-            locationHTML = "./location.html" 
+            locationHTML = 'file://' + os.path.realpath('location.html')
             webbrowser.get('chrome').open_new_tab(locationHTML)
+            webbrowser.reload(locationHTML)
         else:
             print("Library Not Found Or Not Written Correctly : {0}".format(err))
     except LibError:
