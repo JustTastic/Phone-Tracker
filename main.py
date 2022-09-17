@@ -9,8 +9,8 @@ import subprocess
 import webbrowser
 
 def main():
-    pepnumber = phonenumbers.parse(mynumber)
-    location = geocoder.description_for_number(pepnumber, 'en')
+    person_number = phonenumbers.parse(mynumber)
+    location = geocoder.description_for_number(person_number, 'en')
 
     print(location)
 
@@ -49,7 +49,7 @@ if __name__ == '__main__':
             webbrowser.register('chrome', None, webbrowser.BackgroundBrowser(chrome_path))
             locationHTML = 'file://' + os.path.realpath('location.html')
             webbrowser.get('chrome').open_new_tab(locationHTML)
-            webbrowser.reload(locationHTML)
+            #! webbrowser.reload(locationHTML)
         else:
             print("Library Not Found Or Not Written Correctly : {0}".format(err))
     except LibError:
